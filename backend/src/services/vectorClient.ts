@@ -1,4 +1,3 @@
-// src/services/vectorClient.ts
 import pineconeClient from './pineconeClient';
 import weaviateClient from './weaviateClient';
 

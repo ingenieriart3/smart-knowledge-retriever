@@ -1,6 +1,3 @@
-// backend/src/seeder.ts
-// in order to run it
-// cd backend
 // npx ts-node src/seeder.ts
 
 import dotenv from 'dotenv';

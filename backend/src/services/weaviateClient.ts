@@ -1,4 +1,3 @@
-// src/services/weaviateClient.ts
 import weaviate from 'weaviate-ts-client';
 
 const client = weaviate.client({

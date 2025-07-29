@@ -1,0 +1,39 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-07-29T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2025.7.29",
+  "resources": [
+    {
+      "_id": "fld_skr_main",
+      "parentId": null,
+      "_type": "request_group",
+      "name": "Smart Knowledge Retriever",
+      "description": "Main folder for embed/query testing"
+    },
+    {
+      "_id": "req_embed_note",
+      "parentId": "fld_skr_main",
+      "_type": "request",
+      "name": "Embed Note",
+      "method": "POST",
+      "url": "http://localhost:3000/api/embed",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": \"note-test-insomnia\",\n  \"text\": \"This is a test note sent from Insomnia to the embed API.\",\n  \"metadata\": {\n    \"title\": \"Test Note from Insomnia\",\n    \"tags\": [\n      \"test\",\n      \"insomnia\"\n    ],\n    \"source\": \"manual\",\n    \"created_at\": \"2025-07-29T18:00:00Z\"\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_query_note",
+      "parentId": "fld_skr_main",
+      "_type": "request",
+      "name": "Query Note",
+      "method": "POST",
+      "url": "http://localhost:3000/api/query",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"text\": \"How do I connect a DHT sensor to ESP32?\"\n}"
+      }
+    }
+  ]
+}

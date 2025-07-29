@@ -1,4 +1,3 @@
-// src/services/pineconeClient.ts
 import { Pinecone } from '@pinecone-database/pinecone';
 import { OpenAI } from 'openai';
 
