@@ -1,0 +1,21 @@
+# Node
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+coverage/
+
+# Docker
+weaviate_data/
+docker-compose.override.yml
+
+# Frontend React (Vite/Next)
+frontend/app/.next/
+frontend/app/dist/
+frontend/app/node_modules/
+
+# Frontend SvelteKit
+frontend/landing/.svelte-kit/
+frontend/landing/build/
+frontend/landing/node_modules/

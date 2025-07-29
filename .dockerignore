@@ -1,0 +1,10 @@
+backend/node_modules
+backend/dist
+.env
+.DS_Store
+*.log
+*.cache
+frontend/**/node_modules
+frontend/**/.next
+frontend/**/build
+frontend/**/.svelte-kit
