@@ -10,28 +10,25 @@ Designed for developers, technical teams, and power users, it helps you store, e
 
 ## 🚀 Tech Stack
 
-- **Backend**: Node.js + Express + TypeScript
-- **Frontend**: React + SvelteKit (landing + dashboard)
-- **Database**: MongoDB
-- **Vector DB**: Pinecone (prod) / Weaviate (dev, Docker)
-- **AI Provider**: OpenAI embeddings API
-- **Infra**: Docker Compose, CI-ready
+- **Backend**: Node.js + Express + TypeScript  
+- **Frontend**: React + SvelteKit (landing + dashboard)  
+- **Database**: MongoDB  
+- **Vector DB**: Pinecone (prod) / Weaviate (dev, Docker)  
+- **AI Provider**: OpenAI embeddings API  
+- **Infra**: Docker Compose, CI-ready  
 
 ---
 
 ## 🧪 Local Development Setup
 
 ```bash
-# 1. Clone the repository and enter the backend
+# 1. Clonar el repo y entrar al root
 git clone https://github.com/tuusuario/smart-knowledge-retriever.git
-cd smart-knowledge-retriever/backend
+cd smart-knowledge-retriever
 
-# 2. Create environment file
+# 2. Crear .env desde el ejemplo
 cp .env.example .env
 
-# 3. Start services (Weaviate + MongoDB)
-docker compose up -d
-
-# 4. Install dependencies and run backend
-npm install
-npm run dev
+# 3. Levantar todo
+chmod +x dev.sh
+./dev.sh
