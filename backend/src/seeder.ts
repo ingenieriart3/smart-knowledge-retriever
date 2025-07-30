@@ -8,7 +8,7 @@ dotenv.config();
 
 const notes = [
   {
-    id: 'note-esp32-dht22',
+    id: uuidv4(),
     text: 'To connect a DHT22 temperature and humidity sensor to an ESP32, use GPIO pin 13 with a 10k pull-up resistor on the data line. Read values every 2 seconds to avoid saturation.',
     metadata: {
       title: 'ESP32 + DHT22 wiring tip',
@@ -18,7 +18,7 @@ const notes = [
     },
   },
   {
-    id: 'note-mongo-backup',
+    id: uuidv4(),
     text: 'To create a MongoDB dump for backup, use `mongodump --uri=<your-uri> --out=./backup`. Restore with `mongorestore`.',
     metadata: {
       title: 'MongoDB backup & restore tip',
@@ -28,7 +28,7 @@ const notes = [
     },
   },
   {
-    id: 'note-openai-embedding',
+    id: uuidv4(),
     text: 'OpenAI provides embedding models like text-embedding-3-small to convert text into high-dimensional vectors. These vectors can be stored and searched using vector databases like Pinecone or Weaviate.',
     metadata: {
       title: 'Embedding basics with OpenAI',
@@ -38,7 +38,7 @@ const notes = [
     },
   },
   {
-    id: 'note-vector-hybrid-setup',
+    id: uuidv4(),
     text: 'In this project, Weaviate is used as the local vector database for development via Docker Compose, allowing for rapid iteration and full offline testing. Pinecone is used in production as a scalable, fully managed service. The code is structured to dynamically select the backend provider using a VECTOR_PROVIDER env variable. Query and upsert methods are normalized across both clients.',
     metadata: {
       title: 'Hybrid vector DB strategy: Weaviate (dev) + Pinecone (prod)',
@@ -48,7 +48,7 @@ const notes = [
     },
   },
   {
-    id: 'note-node-ts-api',
+    id: uuidv4(),
     text: 'When building an API with Node.js and TypeScript, use ts-node-dev for live reload in development and separate build/start scripts for production.',
     metadata: {
       title: 'Node + TypeScript API setup tip',

@@ -2,7 +2,8 @@ import weaviate from 'weaviate-ts-client';
 
 const client = weaviate.client({
   scheme: 'http',
-  host: 'localhost:8080',
+  // host: process.env.WEAVIATE_URL || 'weaviate:8080',
+  host: process.env.WEAVIATE_URL || 'localhost:8080',
 });
 
 export default {
@@ -11,7 +12,7 @@ export default {
     return null; // No manual embed required
   },
 
-  async upsert(id: string, text: string, metadata = {}) {
+  async upsert(id: string, text: string | number[] , metadata = {}) {
     await client.data
       .creator()
       .withClassName('Note')

@@ -1,14 +1,19 @@
 services:
   weaviate:
+    # container_name: weaviate
     image: semitechnologies/weaviate:latest
     ports:
       - "8080:8080"
+    networks:
+      - smart-net
     environment:
       - QUERY_DEFAULTS_LIMIT=25
       - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
       - PERSISTENCE_DATA_PATH=/var/lib/weaviate
-      - DEFAULT_VECTORIZER_MODULE=text2vec-openai
-      - ENABLE_MODULES=text2vec-openai
+      # - DEFAULT_VECTORIZER_MODULE=text2vec-openai
+      # - ENABLE_MODULES=text2vec-openai
+      - DEFAULT_VECTORIZER_MODULE='none'
+      - ENABLE_MODULES='none'
       - OPENAI_APIKEY=${OPENAI_API_KEY}
     volumes:
       - weaviate_data:/var/lib/weaviate
@@ -17,13 +22,18 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    networks:
+      - smart-net
 
   backend:
     build:
       context: ./backend
     ports:
       - "3000:3000"
+    networks:
+      - smart-net
     environment:
+      - NODE_ENV=development
       - VECTOR_PROVIDER=weaviate
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - PINECONE_API_KEY=${PINECONE_API_KEY}
@@ -40,9 +50,12 @@ services:
     build:
       context: ./frontend/app
     ports:
-      - "5173:5173"
+      - "3002:3002"
+    networks:
+      - smart-net
     volumes:
       - ./frontend/app:/app
+      - /app/node_modules 
     working_dir: /app
     command: npm run dev
     depends_on:
@@ -52,9 +65,12 @@ services:
     build:
       context: ./frontend/landing
     ports:
-      - "3001:3000"
+      - "3001:3001"
+    networks:
+      - smart-net
     volumes:
       - ./frontend/landing:/app
+      - /app/node_modules 
     working_dir: /app
     command: npm run dev
     depends_on:
@@ -62,3 +78,8 @@ services:
 
 volumes:
   weaviate_data:
+
+networks:
+  smart-net:
+    driver: bridge
+

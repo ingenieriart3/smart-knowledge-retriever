@@ -19,3 +19,8 @@ frontend/app/node_modules/
 frontend/landing/.svelte-kit/
 frontend/landing/build/
 frontend/landing/node_modules/
+
+# Test outputs
+backend/__tests__/output/
+backend/__tests__/*.log
+
