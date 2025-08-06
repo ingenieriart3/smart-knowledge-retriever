@@ -39,7 +39,9 @@ chmod +x dev.sh
 
 ./dev.sh landing → lift the svelte landing
 
-./dev.sh clean → stop everything and delete containers
+./dev.sh clean → stop everything and delete 
+  # seeder
+  docker exec -it smart-knowledge-retriever-backend-1 sh > npx ts-node src/seeder.ts
 
 # 4. Access
 🧠 API Express      → http://localhost:3000
