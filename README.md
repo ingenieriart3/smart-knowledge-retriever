@@ -49,6 +49,19 @@ chmod +x dev.sh
 📊 Weaviate Console → http://localhost:8080
 ---
 
+# 5. ⚡ Bonus: Value pitch for the demo
+
+Smart Knowledge Retriever is a hybrid memory engine that stores both structured and vectorized knowledge. It allows ingesting notes or documents, vectorizes them using OpenAI embeddings via Weaviate, and supports intelligent querying based on semantic similarity.
+
+This architecture is designed to scale across use cases like:
+
+    Personal second brain
+
+    Company documentation search
+
+    Embedded AI assistants
+---
+
 ## 🔧 Improvements / Dev Notes
 
 - ✅ Add `--host` to Svelte dev script to allow external access from Docker:
@@ -81,3 +94,4 @@ chmod +x dev.sh
   ```bash
   docker container prune
   ```
+
