@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "seed": "ts-node scripts/waitForWeaviate.ts && ts-node src/seeder.ts"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
@@ -21,8 +22,11 @@
   "dependencies": {
     "@pinecone-database/pinecone": "^6.1.2",
     "axios": "^1.11.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "mongoose": "^8.17.0",
+    "node-fetch": "^3.3.2",
     "openai": "^5.10.2",
     "weaviate-ts-client": "^2.2.0"
   }

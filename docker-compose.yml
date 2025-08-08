@@ -1,34 +1,102 @@
 services:
-  weaviate:
+  # weaviate:
     # container_name: weaviate
-    image: semitechnologies/weaviate:latest
+    # image: semitechnologies/weaviate:latest
+    # ports:
+    #   - "8080:8080"
+    # networks:
+    #   - smart-net
+    # environment:
+    #   - QUERY_DEFAULTS_LIMIT=25
+    #   - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+    #   - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+    #   # - ENABLE_MODULES=text2vec-openai
+    #   # - DEFAULT_VECTORIZER_MODULE=text2vec-openai
+    #   # - ENABLE_MODULES=text2vec-transformers
+    #   # - DEFAULT_VECTORIZER_MODULE=text2vec-transformers
+    #   - DEFAULT_VECTORIZER_MODULE=none
+    #   - ENABLE_MODULES= none
+    #   - OPENAI_APIKEY=${OPENAI_API_KEY}
+    #   - PINECONE_API_KEY=${PINECONE_API_KEY}
+    #   - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
+    #   - CLUSTER_HOSTNAME=node1
+    # volumes:
+    #   - weaviate_data:/var/lib/weaviate
+
+    # image: semitechnologies/weaviate:1.25.3
+    # ports:
+    #   - "8080:8080"
+    # environment:
+    #   QUERY_DEFAULTS_LIMIT: 25
+    #   AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+    #   PERSISTENCE_DATA_PATH: './data'
+    #   DEFAULT_VECTORIZER_MODULE: none
+    #   ENABLE_MODULES: none
+    #   CLUSTER_HOSTNAME: 'node1'
+    # volumes:
+    #   - weaviate_data:/data
+    # networks:
+    #   - smart-net
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080/v1/.well-known/ready"]
+    #   interval: 5s
+    #   timeout: 2s
+    #   retries: 10
+  # weaviate:
+  #   image: semitechnologies/weaviate:1.25.3
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     QUERY_DEFAULTS_LIMIT: 25
+  #     AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+  #     PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+  #     DEFAULT_VECTORIZER_MODULE: none
+  #     ENABLE_MODULES: 'none'  # Entre comillas para evitar problemas
+  #     CLUSTER_HOSTNAME: 'node1'
+  #   volumes:
+  #     - weaviate_data:/var/lib/weaviate  # Coincide con PERSISTENCE_DATA_PATH
+  #   networks:
+  #     - smart-net
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8080/v1/.well-known/ready"]
+  #     interval: 5s
+  #     timeout: 2s
+  #     retries: 10
+
+  weaviate:
+    image: semitechnologies/weaviate:1.23.7  # Versión muy estable
     ports:
       - "8080:8080"
-    networks:
-      - smart-net
     environment:
-      - QUERY_DEFAULTS_LIMIT=25
-      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
-      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
-      # - ENABLE_MODULES=text2vec-openai
-      # - DEFAULT_VECTORIZER_MODULE=text2vec-openai
-      # - ENABLE_MODULES=text2vec-transformers
-      # - DEFAULT_VECTORIZER_MODULE=text2vec-transformers
-      - OPENAI_APIKEY=${OPENAI_API_KEY}
-      - PINECONE_API_KEY=${PINECONE_API_KEY}
-      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
-
+      QUERY_DEFAULTS_LIMIT: 20
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'none'
+      ENABLE_MODULES: ''
+      CLUSTER_HOSTNAME: 'node1'
+      DISK_USE_WARNING_PERCENTAGE: '90'  # Ajustar umbrales de disco
+      DISK_USE_READONLY_PERCENTAGE: '95'
     volumes:
       - weaviate_data:/var/lib/weaviate
-
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 30s  # Mayor intervalo para entornos limitados
+      timeout: 20s   # Mayor timeout
+      retries: 6
+      start_period: 2m  # Tiempo inicial antes de empezar a chequear
+    networks:
+      - smart-net
   mongo:
+    # container_name: mongo
     image: mongo
+    restart: unless-stopped
     ports:
       - "27017:27017"
     networks:
       - smart-net
 
   backend:
+    # container_name: backend
     build:
       context: ./backend
     ports:
@@ -40,10 +108,12 @@ services:
       - VECTOR_PROVIDER=weaviate
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - PINECONE_API_KEY=${PINECONE_API_KEY}
-      - PINECONE_INDEX_NAME=notes
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
+      - USE_EMBEDDINGS_MANUAL=${USE_EMBEDDINGS_MANUAL}
     depends_on:
       - mongo
       - weaviate
+      - embed
     volumes:
       - ./backend:/app
     working_dir: /app
@@ -78,6 +148,15 @@ services:
     command: npm run dev
     depends_on:
       - backend
+
+  embed:
+    build:
+      context: ./embed
+    ports:
+      - "8001:8001"
+    networks:
+      - smart-net
+    restart: unless-stopped
 
 volumes:
   weaviate_data:

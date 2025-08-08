@@ -1,99 +1,121 @@
 # 🧠 Smart Knowledge Retriever
 
-> Store ideas. Search semantically. Decide smart.
+> Store ideas. Search semantically. Stay sharp.
 
-**Smart Knowledge Retriever** is an intelligent knowledge and idea management tool that combines semantic search, embeddings, and AI recommendations.  
-Built with **TypeScript**, **Node.js**, **MongoDB**, **React**, **Svelte**, **OpenAI**, and **Pinecone/Weaviate**, it showcases a modern full-stack architecture that bridges traditional CRUD operations with advanced vector search capabilities.  
-Designed for developers, technical teams, and power users, it helps you store, explore, and retrieve valuable insights — faster and smarter.
+**Smart Knowledge Retriever** is an intelligent knowledge and idea management tool that combines semantic search, vector embeddings, and AI-powered insights.  
+It bridges traditional CRUD storage with modern vector databases, giving you fast and accurate access to your thoughts, notes, and technical concepts.
+
+Designed for developers, technical teams, and curious minds.  
+**Open Source, modular, extensible.**
 
 ---
 
 ## 🚀 Tech Stack
 
 - **Backend**: Node.js + Express + TypeScript  
-- **Frontend**: React + SvelteKit (landing + dashboard)  
+- **Frontend**: React (dashboard) + SvelteKit (landing)  
 - **Database**: MongoDB  
-- **Vector DB**: Pinecone (prod) / Weaviate (dev, Docker)  
-- **AI Provider**: OpenAI embeddings API  
+- **Vector DB**: Weaviate (dev, Docker) / Pinecone (prod)  
+- **Embeddings**: OpenAI API or local service (`/embed`) with `text-embedding-3-small`  
 - **Infra**: Docker Compose, CI-ready  
+
+---
+
+## ⚡ Features
+
+- 📝 Classic CRUD for notes and metadata  
+- 📐 Embedding generation via OpenAI or local service  
+- 🔍 Semantic search using Weaviate or Pinecone  
+- 🧠 Unified abstraction for vector providers (`vectorClient`)  
+- 🌍 Modern full-stack: TypeScript, MongoDB, Embeddings, Docker, Developer-first
 
 ---
 
 ## 🧪 Local Development Setup
 
 ```bash
-# 1. Clone the repository and enter root
-git clone https://github.com/tuusuario/smart-knowledge-retriever.git
+# 1. Clone the repo
+git clone https://github.com/yourusername/smart-knowledge-retriever.git
 cd smart-knowledge-retriever
 
-# 2. Create .env from the example
+# 2. Create your environment file
 cp .env.example .env
 
-# 3. Lift 
+# 3. Start development environment
 chmod +x dev.sh
-./dev.sh all → lift everything (or default ./dev.sh )
 
-./dev.sh backend → lift the backend
+# Lift all services (backend + embed + frontend + db + weaviate)
+./dev.sh all         
 
-./dev.sh app → lift the react app
+# Or individually:
+./dev.sh backend     # lift backend only
+./dev.sh app         # React dashboard
+./dev.sh landing     # Svelte landing
+./dev.sh clean       # stop & clean all containers and volumes
 
-./dev.sh landing → lift the svelte landing
+🌱 Seeder (Optional)
 
-./dev.sh clean → stop everything and delete 
-  # seeder
-  docker exec -it smart-knowledge-retriever-backend-1 sh > npx ts-node src/seeder.ts
+After all services are up, you can prefill the vector DB with example notes:
 
-# 4. Access
-🧠 API Express      → http://localhost:3000
-🎯 Svelte Landing   → http://localhost:3001
-🔧 React Dashboard  → http://localhost:3002
-🗃️ MongoDB UI       → http://localhost:27017
-📊 Weaviate Console → http://localhost:8080
----
+# Run inside the backend container
+docker exec -it smart-knowledge-retriever-backend-1 sh
+npx ts-node src/seeder.ts
 
-# 5. ⚡ Bonus: Value pitch for the demo
+Seeder will attempt to embed the text with embedText (OpenAI or local).
+If using USE_EMBEDDINGS_MANUAL=true, it will skip API calls and use the /embed service.
+🔗 Local Access Points
+Service	URL
+🧠 Express API	http://localhost:3000
+🎯 Svelte Landing	http://localhost:3001
+🔧 React Dashboard	http://localhost:3002
+🗃️ MongoDB	mongodb://localhost:27017
+📊 Weaviate Console	http://localhost:8080
+🤖 Embedding Server	http://localhost:8001/embed
+✨ Pitch This Demo
 
-Smart Knowledge Retriever is a hybrid memory engine that stores both structured and vectorized knowledge. It allows ingesting notes or documents, vectorizes them using OpenAI embeddings via Weaviate, and supports intelligent querying based on semantic similarity.
+    Smart Knowledge Retriever is a hybrid memory engine.
+    It stores knowledge both as structured data (MongoDB) and semantic vectors (Weaviate/Pinecone), enabling intelligent querying with natural language.
 
-This architecture is designed to scale across use cases like:
+It’s perfect for:
 
-    Personal second brain
+    🧠 Personal second brains
 
-    Company documentation search
+    📚 AI-enhanced documentation search
 
-    Embedded AI assistants
----
+    💬 AI assistant RAG pipelines
 
-## 🔧 Improvements / Dev Notes
+    🔍 Developer notes + context
 
-- ✅ Add `--host` to Svelte dev script to allow external access from Docker:
+    🧾 Research and literature insights
 
-  ```json
-  "dev": "vite dev --port 3001 --host"
-  ```
+🧰 Dev Tips & Good Practices
 
-- 💡 Tip: expose the port in `docker-compose.yml`:
+    ✅ Enable external access for Svelte in package.json:
 
-  ```yaml
-  ports:
-    - "3001:3001"
-  ```
+"dev": "vite dev --port 3001 --host"
 
-- 🧪 Optional: add a healthcheck for the landing service:
+🔍 Don't forget to expose ports in docker-compose.yml:
 
-  ```yaml
-  healthcheck:
-    test: ["CMD-SHELL", "wget --spider -q http://localhost:3001 || exit 1"]
-    interval: 10s
-    timeout: 5s
-    retries: 3
-  ```
+ports:
+  - "3001:3001"
 
-- 🔍 Consider documenting startup scripts per service in `/docs/dev.md` (optional).
+🔄 Optional healthcheck for Svelte:
 
-- 🧼 Cleanup dangling containers (from `docker compose run`):
+healthcheck:
+  test: ["CMD-SHELL", "wget --spider -q http://localhost:3001 || exit 1"]
+  interval: 10s
+  timeout: 5s
+  retries: 3
 
-  ```bash
-  docker container prune
-  ```
+🧼 Clean up dangling containers:
 
+    docker container prune
+
+    📄 Add service startup notes to /docs/dev.md (optional but helpful for contributors)
+
+🪪 License
+
+MIT License – free for personal and commercial use.
+Use it, fork it, improve it — and tag us if you build something cool.
+
+Made with 🧠 by ingenieriart3
