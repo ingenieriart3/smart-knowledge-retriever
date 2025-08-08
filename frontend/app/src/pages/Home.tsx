@@ -37,7 +37,7 @@ export default function Home() {
     // const payload = {
     //   text,
     //   topK: 3,
-    // };
+    // }; 
 
     try {
       const res = await fetch(endpoint, {
