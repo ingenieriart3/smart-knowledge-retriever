@@ -1,4 +1,7 @@
 import weaviate from 'weaviate-ts-client';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export async function initWeaviateSchema(retries = 5, delay = 3000) {
   const client = weaviate.client({

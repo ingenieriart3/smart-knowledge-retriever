@@ -2,104 +2,95 @@
 
 > Store ideas. Search semantically. Stay sharp.
 
-**Smart Knowledge Retriever** is an intelligent knowledge and idea management tool that combines semantic search, vector embeddings, and AI-powered insights.  
-It bridges traditional CRUD storage with modern vector databases, giving you fast and accurate access to your thoughts, notes, and technical concepts.
+**Smart Knowledge Retriever** is an AI-powered knowledge management tool for developers and technical teams.  
+It bridges traditional CRUD storage with modern vector search, combining the power of semantic embeddings and structured data in one modular, extensible stack.
 
-Designed for developers, technical teams, and curious minds.  
-**Open Source, modular, extensible.**
+Designed to boost your memory, empower your workflows, and grow with your projects.
+
+**🛠️ Open Source. Plug & Play. Developer-first.**
 
 ---
 
 ## 🚀 Tech Stack
 
 - **Backend**: Node.js + Express + TypeScript  
-- **Frontend**: React (dashboard) + SvelteKit (landing)  
+- **Frontend**: React (Dashboard) + SvelteKit (Landing)  
 - **Database**: MongoDB  
-- **Vector DB**: Weaviate (dev, Docker) / Pinecone (prod)  
-- **Embeddings**: OpenAI API or local service (`/embed`) with `text-embedding-3-small`  
-- **Infra**: Docker Compose, CI-ready  
+- **Vector DB**: Weaviate (dev via Docker) / Pinecone (prod-ready)  
+- **Embeddings**: OpenAI API or local embedding service (`/embed`)  
+- **Infra**: Docker Compose, CI-ready, portable
 
 ---
 
-## ⚡ Features
+## ⚡ Key Features
 
-- 📝 Classic CRUD for notes and metadata  
-- 📐 Embedding generation via OpenAI or local service  
-- 🔍 Semantic search using Weaviate or Pinecone  
-- 🧠 Unified abstraction for vector providers (`vectorClient`)  
-- 🌍 Modern full-stack: TypeScript, MongoDB, Embeddings, Docker, Developer-first
+- 📝 **CRUD for Notes** — manage structured metadata and content  
+- 📐 **Embeddings** — generate vectors via OpenAI or local model  
+- 🔍 **Semantic Search** — fast, contextual search across notes  
+- 🧠 **Unified Abstraction Layer** — switch vector DBs seamlessly  
+- 🌱 **Seeder** — populate your DB with examples in seconds  
+- 🧰 **Modular Design** — ideal for hacking, integrating or extending
 
 ---
 
-## 🧪 Local Development Setup
+## 🧪 Local Development
 
 ```bash
-# 1. Clone the repo
+# Clone repo
 git clone https://github.com/yourusername/smart-knowledge-retriever.git
 cd smart-knowledge-retriever
 
-# 2. Create your environment file
+# Setup env
 cp .env.example .env
 
-# 3. Start development environment
+# Start full dev stack
 chmod +x dev.sh
+./dev.sh all
 
-# Lift all services (backend + embed + frontend + db + weaviate)
-./dev.sh all         
+🔧 Or run individually:
 
-# Or individually:
-./dev.sh backend     # lift backend only
-./dev.sh app         # React dashboard
-./dev.sh landing     # Svelte landing
-./dev.sh clean       # stop & clean all containers and volumes
+./dev.sh backend    # API only
+./dev.sh app        # React dashboard
+./dev.sh landing    # Svelte landing
+./dev.sh clean      # Stop & clean all
 
-🌱 Seeder (Optional)
+🌱 Optional: Seeder
 
-After all services are up, you can prefill the vector DB with example notes:
-
-# Run inside the backend container
 docker exec -it smart-knowledge-retriever-backend-1 sh
 npx ts-node src/seeder.ts
 
-Seeder will attempt to embed the text with embedText (OpenAI or local).
-If using USE_EMBEDDINGS_MANUAL=true, it will skip API calls and use the /embed service.
+Supports both OpenAI embeddings and local model (USE_EMBEDDINGS_MANUAL=true).
 🔗 Local Access Points
 Service	URL
 🧠 Express API	http://localhost:3000
 🎯 Svelte Landing	http://localhost:3001
-🔧 React Dashboard	http://localhost:3002
+📊 React Dashboard	http://localhost:3002
 🗃️ MongoDB	mongodb://localhost:27017
-📊 Weaviate Console	http://localhost:8080
+📡 Weaviate Console	http://localhost:8080
 🤖 Embedding Server	http://localhost:8001/embed
-✨ Pitch This Demo
+✨ Use Cases
 
-    Smart Knowledge Retriever is a hybrid memory engine.
-    It stores knowledge both as structured data (MongoDB) and semantic vectors (Weaviate/Pinecone), enabling intelligent querying with natural language.
+    🧠 Second brain for devs and teams
 
-It’s perfect for:
+    📚 Semantic search for documentation
 
-    🧠 Personal second brains
+    💬 RAG pipelines for AI assistants
 
-    📚 AI-enhanced documentation search
+    🔍 Context engine for notes and ideas
 
-    💬 AI assistant RAG pipelines
+    🧾 Literature and research exploration
 
-    🔍 Developer notes + context
-
-    🧾 Research and literature insights
-
-🧰 Dev Tips & Good Practices
-
-    ✅ Enable external access for Svelte in package.json:
+💡 Dev Tips
+Expose SvelteKit in package.json
 
 "dev": "vite dev --port 3001 --host"
 
-🔍 Don't forget to expose ports in docker-compose.yml:
+Docker port mapping
 
 ports:
   - "3001:3001"
 
-🔄 Optional healthcheck for Svelte:
+Optional Healthcheck
 
 healthcheck:
   test: ["CMD-SHELL", "wget --spider -q http://localhost:3001 || exit 1"]
@@ -107,15 +98,17 @@ healthcheck:
   timeout: 5s
   retries: 3
 
-🧼 Clean up dangling containers:
+Clean dangling containers
 
-    docker container prune
+docker container prune
 
-    📄 Add service startup notes to /docs/dev.md (optional but helpful for contributors)
+📄 Docs & Contributions
 
+Contributors are welcome!
+Create a /docs/dev.md with your notes, startup tips, or ideas.
 🪪 License
 
-MIT License – free for personal and commercial use.
-Use it, fork it, improve it — and tag us if you build something cool.
+MIT License — free for personal and commercial use.
+Use it, fork it, build something cool — and tag us if you do!
 
-Made with 🧠 by ingenieriart3
+Made with 🧠 by @ingenieriart3

@@ -36,6 +36,33 @@ export const createNote = async (req: Request, res: Response) => {
   }
 };
 
+// export const createNote = async (req: Request, res: Response) => {
+//   try {
+//     const { text, metadata } = req.body;
+//     if (!text) return res.status(400).json({ error: 'text es requerido' });
+
+//     // 1) Guardar en Mongo primero (para tener _id)
+//     const doc = await NoteModel.create({ text, metadata });
+
+//     // 2) Generar vector o usar texto según config
+//     const useManual = process.env.USE_EMBEDDINGS_MANUAL === 'true';
+//     const vectorOrText = useManual ? await weaviateClient.embedText(text) : text;
+
+//     // 3) Upsert en Weaviate con el mismo ID de Mongo (consistencia)
+//     await weaviateClient.upsert(String(doc._id), vectorOrText, {
+//       title: metadata?.title || '',
+//       source: metadata?.source || '',
+//       tags: metadata?.tags || [],
+//       created_at: metadata?.created_at || new Date().toISOString(),
+//       text, // si querés duplicar el texto en Weaviate para poder pedirlo como campo
+//     });
+
+//     res.json({ ok: true, note: doc });
+//   } catch (error) {
+//     console.error('[CREATE ERROR]', error);
+//     res.status(500).json({ error: 'Failed to create note' });
+//   }
+// };
 
 export const getAllNotes = async (_req: Request, res: Response) => {
   try {
