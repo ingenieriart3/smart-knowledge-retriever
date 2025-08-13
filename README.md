@@ -37,7 +37,7 @@ Designed to boost your memory, empower your workflows, and grow with your projec
 
 ```bash
 # Clone repo
-git clone https://github.com/yourusername/smart-knowledge-retriever.git
+git clone https://github.com/ingenieriart3/smart-knowledge-retriever.git
 cd smart-knowledge-retriever
 
 # Setup env
